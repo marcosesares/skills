@@ -1,0 +1,477 @@
+{
+  "generated_at": "2026-05-15T00:00:00Z",
+  "modules": [
+    {
+      "name": "engineering",
+      "path": "skills/engineering",
+      "purpose": "Daily code work skills: debugging, architecture, testing, issue management, and domain alignment",
+      "primary_files": [
+        "skills/engineering/diagnose/SKILL.md",
+        "skills/engineering/grill-with-docs/SKILL.md",
+        "skills/engineering/improve-codebase-architecture/SKILL.md",
+        "skills/engineering/prototype/SKILL.md",
+        "skills/engineering/setup-matt-pocock-skills/SKILL.md",
+        "skills/engineering/tdd/SKILL.md",
+        "skills/engineering/to-issues/SKILL.md",
+        "skills/engineering/to-prd/SKILL.md",
+        "skills/engineering/triage/SKILL.md",
+        "skills/engineering/zoom-out/SKILL.md"
+      ],
+      "functions": [
+        {
+          "name": "diagnose",
+          "file": "skills/engineering/diagnose/SKILL.md",
+          "params": ["bug description (natural language)"],
+          "returns": "Fixed bug + regression test + cleanup",
+          "confidence": "confirmed"
+        },
+        {
+          "name": "grill-with-docs",
+          "file": "skills/engineering/grill-with-docs/SKILL.md",
+          "params": ["plan or design (natural language)"],
+          "returns": "Shared understanding + updated CONTEXT.md + optional ADRs",
+          "confidence": "confirmed"
+        },
+        {
+          "name": "improve-codebase-architecture",
+          "file": "skills/engineering/improve-codebase-architecture/SKILL.md",
+          "params": ["codebase (implicit from context)"],
+          "returns": "Numbered deepening candidates + grilling loop for selected candidate",
+          "confidence": "confirmed"
+        },
+        {
+          "name": "prototype",
+          "file": "skills/engineering/prototype/SKILL.md",
+          "params": ["question (logic/state vs UI)"],
+          "returns": "Logic: runnable terminal app | UI: N variants on route with switcher",
+          "confidence": "confirmed"
+        },
+        {
+          "name": "setup-matt-pocock-skills",
+          "file": "skills/engineering/setup-matt-pocock-skills/SKILL.md",
+          "params": ["existing repo (implicit)"],
+          "returns": "AGENTS.md/CLAUDE.md update + docs/agents/{issue-tracker,triage-labels,domain}.md",
+          "confidence": "confirmed"
+        },
+        {
+          "name": "tdd",
+          "file": "skills/engineering/tdd/SKILL.md",
+          "params": ["feature or bug to implement"],
+          "returns": "Passing tests + implementation via vertical slices",
+          "confidence": "confirmed"
+        },
+        {
+          "name": "to-issues",
+          "file": "skills/engineering/to-issues/SKILL.md",
+          "params": ["plan/spec/PRD (from conversation or issue)"],
+          "returns": "Published vertical-slice issues in dependency order",
+          "confidence": "confirmed"
+        },
+        {
+          "name": "to-prd",
+          "file": "skills/engineering/to-prd/SKILL.md",
+          "params": ["conversation context (implicit)"],
+          "returns": "PRD published as issue on issue tracker",
+          "confidence": "confirmed"
+        },
+        {
+          "name": "triage",
+          "file": "skills/engineering/triage/SKILL.md",
+          "params": ["issue (identifier or natural language description)"],
+          "returns": "Issue classified + labeled + agent brief or triage notes",
+          "confidence": "confirmed"
+        },
+        {
+          "name": "zoom-out",
+          "file": "skills/engineering/zoom-out/SKILL.md",
+          "params": ["none — prompt IS the instruction"],
+          "returns": "Module map + caller graph in domain vocabulary",
+          "confidence": "confirmed"
+        }
+      ],
+      "entities": [
+        {
+          "name": "AgentBrief",
+          "fields": [
+            { "name": "category", "type": "enum{bug,enhancement}", "required": true },
+            { "name": "summary", "type": "string", "required": true },
+            { "name": "current_behavior", "type": "string", "required": true },
+            { "name": "desired_behavior", "type": "string", "required": true },
+            { "name": "key_interfaces", "type": "KeyInterface[]", "required": true },
+            { "name": "acceptance_criteria", "type": "string[]", "required": true },
+            { "name": "out_of_scope", "type": "string[]", "required": true }
+          ],
+          "confidence": "confirmed"
+        },
+        {
+          "name": "TriageState",
+          "fields": [
+            { "name": "state_role", "type": "enum{needs-triage,needs-info,ready-for-agent,ready-for-human,wontfix}", "required": true },
+            { "name": "category_role", "type": "enum{bug,enhancement}", "required": true }
+          ],
+          "confidence": "confirmed"
+        },
+        {
+          "name": "IssueSlice",
+          "fields": [
+            { "name": "title", "type": "string", "required": true },
+            { "name": "type", "type": "enum{HITL,AFK}", "required": true },
+            { "name": "blocked_by", "type": "string[]", "required": true },
+            { "name": "what_to_build", "type": "string", "required": true },
+            { "name": "acceptance_criteria", "type": "string[]", "required": true }
+          ],
+          "confidence": "confirmed"
+        },
+        {
+          "name": "DepthAssessment",
+          "fields": [
+            { "name": "module", "type": "string", "required": true },
+            { "name": "depth", "type": "enum{deep,shallow}", "required": true },
+            { "name": "deletion_test_result", "type": "enum{concentrate,disperse}", "required": true },
+            { "name": "dependency_category", "type": "enum{in-process,local-substitutable,remote-owned,true-external}", "required": true },
+            { "name": "seam_count", "type": "int", "required": true }
+          ],
+          "confidence": "confirmed"
+        }
+      ],
+      "business_rules": [
+        {
+          "description": "ADR offered only when: hard-to-reverse AND surprising-without-context AND genuine trade-off (ALL THREE required)",
+          "location": "skills/engineering/grill-with-docs/SKILL.md",
+          "confidence": "confirmed"
+        },
+        {
+          "description": "CONTEXT.md must be totally devoid of implementation details — glossary and nothing else",
+          "location": "skills/engineering/grill-with-docs/SKILL.md",
+          "confidence": "confirmed"
+        },
+        {
+          "description": "Every triaged issue carries exactly 1 state role + 1 category role",
+          "location": "skills/engineering/triage/SKILL.md",
+          "confidence": "confirmed"
+        },
+        {
+          "description": "All triage comments must start with: '> *This was generated by AI during triage.*'",
+          "location": "skills/engineering/triage/SKILL.md",
+          "confidence": "confirmed"
+        },
+        {
+          "description": "Prototype code is throwaway — must be deleted or absorbed after answering its question",
+          "location": "skills/engineering/prototype/SKILL.md",
+          "confidence": "confirmed"
+        },
+        {
+          "description": "TDD anti-pattern: horizontal slices (all tests then all code). Correct: vertical slices (1 test → 1 impl, repeat)",
+          "location": "skills/engineering/tdd/SKILL.md",
+          "confidence": "confirmed"
+        },
+        {
+          "description": "to-issues: publish in dependency order (blockers first) so real identifiers can be referenced",
+          "location": "skills/engineering/to-issues/SKILL.md",
+          "confidence": "confirmed"
+        },
+        {
+          "description": "Agent briefs must not reference file paths or line numbers — they go stale",
+          "location": "skills/engineering/triage/AGENT-BRIEF.md",
+          "confidence": "confirmed"
+        },
+        {
+          "description": "One adapter = hypothetical seam; two adapters = real seam. Don't introduce port without ≥2 justified adapters",
+          "location": "skills/engineering/improve-codebase-architecture/DEEPENING.md",
+          "confidence": "confirmed"
+        }
+      ],
+      "dependencies": ["productivity"],
+      "algorithms": [
+        "diagnose: 6-phase state machine with 10-step feedback loop construction",
+        "triage: 5-state issue classification machine + .out-of-scope concept-similarity matching",
+        "improve-codebase-architecture: deletion test + 4-category dependency classifier",
+        "prototype: binary branch router (logic vs UI) with sub-shape selection"
+      ],
+      "complexity": "high"
+    },
+    {
+      "name": "productivity",
+      "path": "skills/productivity",
+      "purpose": "General workflow tools not specific to code: communication compression, decision interviews, session handoff, skill authoring",
+      "primary_files": [
+        "skills/productivity/caveman/SKILL.md",
+        "skills/productivity/grill-me/SKILL.md",
+        "skills/productivity/handoff/SKILL.md",
+        "skills/productivity/write-a-skill/SKILL.md"
+      ],
+      "functions": [
+        {
+          "name": "caveman",
+          "file": "skills/productivity/caveman/SKILL.md",
+          "params": ["none — toggle activation"],
+          "returns": "All subsequent responses in compressed mode until deactivated",
+          "confidence": "confirmed"
+        },
+        {
+          "name": "grill-me",
+          "file": "skills/productivity/grill-me/SKILL.md",
+          "params": ["plan or design topic"],
+          "returns": "Resolved decision tree via relentless 1-question-at-a-time interview",
+          "confidence": "confirmed"
+        },
+        {
+          "name": "handoff",
+          "file": "skills/productivity/handoff/SKILL.md",
+          "params": ["optional: focus description for next session"],
+          "returns": "handoff-XXXXXX.md file at temp path",
+          "confidence": "confirmed"
+        },
+        {
+          "name": "write-a-skill",
+          "file": "skills/productivity/write-a-skill/SKILL.md",
+          "params": ["skill requirements (gathered via interview)"],
+          "returns": "SKILL.md + optional supporting files + optional scripts/",
+          "confidence": "confirmed"
+        }
+      ],
+      "entities": [
+        {
+          "name": "SkillMetadata",
+          "fields": [
+            { "name": "name", "type": "string (kebab-case)", "required": true },
+            { "name": "description", "type": "string (max 1024 chars)", "required": true },
+            { "name": "disable-model-invocation", "type": "boolean", "required": false },
+            { "name": "argument-hint", "type": "string", "required": false }
+          ],
+          "confidence": "confirmed"
+        },
+        {
+          "name": "CavemanState",
+          "fields": [
+            { "name": "active", "type": "boolean", "required": true },
+            { "name": "exception_active", "type": "boolean", "required": true }
+          ],
+          "confidence": "confirmed"
+        }
+      ],
+      "business_rules": [
+        {
+          "description": "Caveman mode persists across ALL turns — never auto-deactivates; only 'stop caveman' or 'normal mode' deactivate it",
+          "location": "skills/productivity/caveman/SKILL.md",
+          "confidence": "confirmed"
+        },
+        {
+          "description": "Handoff must not duplicate content already in PRDs/plans/ADRs/issues — reference by path/URL only",
+          "location": "skills/productivity/handoff/SKILL.md",
+          "confidence": "confirmed"
+        },
+        {
+          "description": "SKILL.md target length: ≤ 100 lines; split into supporting files if exceeded",
+          "location": "skills/productivity/write-a-skill/SKILL.md",
+          "confidence": "confirmed"
+        },
+        {
+          "description": "Skill description must include 'Use when [specific triggers]' and be ≤ 1024 chars",
+          "location": "skills/productivity/write-a-skill/SKILL.md",
+          "confidence": "confirmed"
+        }
+      ],
+      "dependencies": [],
+      "algorithms": [
+        "caveman: toggle state machine with auto-clarity exception for destructive/security operations"
+      ],
+      "complexity": "low"
+    },
+    {
+      "name": "misc",
+      "path": "skills/misc",
+      "purpose": "Utility and setup skills kept around but rarely used: git safety, type assertion migration, exercise scaffolding, pre-commit setup",
+      "primary_files": [
+        "skills/misc/git-guardrails-claude-code/SKILL.md",
+        "skills/misc/migrate-to-shoehorn/SKILL.md",
+        "skills/misc/scaffold-exercises/SKILL.md",
+        "skills/misc/setup-pre-commit/SKILL.md"
+      ],
+      "functions": [
+        {
+          "name": "git-guardrails-claude-code",
+          "file": "skills/misc/git-guardrails-claude-code/SKILL.md",
+          "params": ["scope: project | global"],
+          "returns": "PreToolUse hook installed in Claude Code settings",
+          "confidence": "confirmed"
+        },
+        {
+          "name": "migrate-to-shoehorn",
+          "file": "skills/misc/migrate-to-shoehorn/SKILL.md",
+          "params": ["test files with as assertions"],
+          "returns": "Migrated test files using fromPartial/fromAny/fromExact",
+          "confidence": "confirmed"
+        },
+        {
+          "name": "scaffold-exercises",
+          "file": "skills/misc/scaffold-exercises/SKILL.md",
+          "params": ["exercise plan (natural language or structured)"],
+          "returns": "Exercise directories passing pnpm ai-hero-cli internal lint",
+          "confidence": "confirmed"
+        },
+        {
+          "name": "setup-pre-commit",
+          "file": "skills/misc/setup-pre-commit/SKILL.md",
+          "params": ["existing Node.js repo (implicit)"],
+          "returns": "Husky + lint-staged + Prettier installed and committed",
+          "confidence": "confirmed"
+        }
+      ],
+      "entities": [
+        {
+          "name": "ExerciseStructure",
+          "fields": [
+            { "name": "section_dir", "type": "string (XX-section-name)", "required": true },
+            { "name": "exercise_dir", "type": "string (XX.YY-exercise-name)", "required": true },
+            { "name": "variants", "type": "enum{problem,solution,explainer}[]", "required": true },
+            { "name": "readme", "type": "file (non-empty)", "required": true }
+          ],
+          "confidence": "confirmed"
+        },
+        {
+          "name": "HooksConfig",
+          "fields": [
+            { "name": "hooks.PreToolUse[].matcher", "type": "string", "required": true },
+            { "name": "hooks.PreToolUse[].hooks[].type", "type": "string (command)", "required": true },
+            { "name": "hooks.PreToolUse[].hooks[].command", "type": "string (path to script)", "required": true }
+          ],
+          "confidence": "confirmed"
+        }
+      ],
+      "business_rules": [
+        {
+          "description": "shoehorn (fromPartial/fromAny/fromExact) is test code ONLY — never production",
+          "location": "skills/misc/migrate-to-shoehorn/SKILL.md",
+          "confidence": "confirmed"
+        },
+        {
+          "description": "scaffold-exercises: use git mv not mv when renaming/moving — preserves git history",
+          "location": "skills/misc/scaffold-exercises/SKILL.md",
+          "confidence": "confirmed"
+        },
+        {
+          "description": "setup-pre-commit: .prettierrc creation is idempotent — only create if none exists",
+          "location": "skills/misc/setup-pre-commit/SKILL.md",
+          "confidence": "confirmed"
+        },
+        {
+          "description": "git-guardrails: settings.json merge is non-destructive — preserve all existing settings",
+          "location": "skills/misc/git-guardrails-claude-code/SKILL.md",
+          "confidence": "confirmed"
+        }
+      ],
+      "dependencies": [],
+      "algorithms": [],
+      "complexity": "low"
+    },
+    {
+      "name": "in-progress",
+      "path": "skills/in-progress",
+      "purpose": "Draft skills under active development: two-axis PR review, writing assistance tools (fragments, beats, shape)",
+      "primary_files": [
+        "skills/in-progress/review/SKILL.md",
+        "skills/in-progress/writing-beats/SKILL.md",
+        "skills/in-progress/writing-fragments/SKILL.md",
+        "skills/in-progress/writing-shape/SKILL.md"
+      ],
+      "functions": [
+        {
+          "name": "review",
+          "file": "skills/in-progress/review/SKILL.md",
+          "params": ["fixed-point (commit/branch/tag)", "optional: spec path"],
+          "returns": "Standards report + Spec report via parallel sub-agents + summary",
+          "confidence": "inferred"
+        },
+        {
+          "name": "writing-beats",
+          "file": "skills/in-progress/writing-beats/SKILL.md",
+          "params": ["raw material file", "article save path"],
+          "returns": "Article built beat-by-beat via user-guided journey",
+          "confidence": "confirmed"
+        },
+        {
+          "name": "writing-fragments",
+          "file": "skills/in-progress/writing-fragments/SKILL.md",
+          "params": ["topic (from initial prompt)", "fragments file path"],
+          "returns": "Growing markdown file of fragments separated by ---",
+          "confidence": "confirmed"
+        },
+        {
+          "name": "writing-shape",
+          "file": "skills/in-progress/writing-shape/SKILL.md",
+          "params": ["input pile (markdown file)", "article save path"],
+          "returns": "Structured article built paragraph by paragraph via shaping session",
+          "confidence": "confirmed"
+        }
+      ],
+      "entities": [
+        {
+          "name": "ReviewReport",
+          "fields": [
+            { "name": "fixed_point", "type": "string", "required": true },
+            { "name": "diff_command", "type": "string (three-dot)", "required": true },
+            { "name": "standards_findings", "type": "Finding[]", "required": true },
+            { "name": "spec_findings", "type": "Finding[]", "required": true },
+            { "name": "summary", "type": "string", "required": true }
+          ],
+          "confidence": "inferred"
+        },
+        {
+          "name": "FragmentFile",
+          "fields": [
+            { "name": "title", "type": "string (H1)", "required": true },
+            { "name": "fragments", "type": "string[] (separated by ---)", "required": true }
+          ],
+          "confidence": "confirmed"
+        },
+        {
+          "name": "Beat",
+          "fields": [
+            { "name": "content", "type": "string (1 sentence to multiple paragraphs)", "required": true },
+            { "name": "index", "type": "int", "required": true }
+          ],
+          "confidence": "inferred"
+        }
+      ],
+      "business_rules": [
+        {
+          "description": "review: three-dot diff (git diff A...B), not two-dot — compares against merge-base",
+          "location": "skills/in-progress/review/SKILL.md",
+          "confidence": "confirmed"
+        },
+        {
+          "description": "review: NEVER merge or rerank Standards and Spec findings — axes are deliberately separate",
+          "location": "skills/in-progress/review/SKILL.md",
+          "confidence": "confirmed"
+        },
+        {
+          "description": "writing-fragments: capture fragments from the very first/initial user prompt, not just later turns",
+          "location": "skills/in-progress/writing-fragments/SKILL.md",
+          "confidence": "confirmed"
+        },
+        {
+          "description": "writing-beats: write ONE beat at a time; end = natural end of journey, NOT empty pile",
+          "location": "skills/in-progress/writing-beats/SKILL.md",
+          "confidence": "confirmed"
+        },
+        {
+          "description": "writing-shape: raw material file is READ-ONLY — never edit it",
+          "location": "skills/in-progress/writing-shape/SKILL.md",
+          "confidence": "confirmed"
+        },
+        {
+          "description": "All writing skills: re-read target file from disk before every write to preserve user edits",
+          "location": "skills/in-progress/writing-beats/SKILL.md, writing-shape/SKILL.md, writing-fragments/SKILL.md",
+          "confidence": "confirmed"
+        }
+      ],
+      "dependencies": ["engineering"],
+      "algorithms": [
+        "review: parallel sub-agent spawn (Standards + Spec) with three-dot diff",
+        "writing-fragments: real-time fragment accumulation from both sides of conversation"
+      ],
+      "complexity": "medium"
+    }
+  ]
+}

@@ -1,0 +1,101 @@
+{
+  "generated_at": "2026-05-15T00:00:00Z",
+  "project_root": "C:/Views/skills",
+  "languages": [
+    { "name": "Markdown", "extensions": [".md"], "file_count": 53 },
+    { "name": "Bash", "extensions": [".sh"], "file_count": 2 },
+    { "name": "JSON", "extensions": [".json"], "file_count": 2 }
+  ],
+  "primary_language": "Markdown",
+  "frameworks": [],
+  "package_manager": null,
+  "entry_points": [
+    { "path": "scripts/link-skills.sh", "type": "deployment_script" },
+    { "path": "scripts/list-skills.sh", "type": "utility_script" },
+    { "path": ".claude-plugin/plugin.json", "type": "plugin_registry" }
+  ],
+  "config_files": [
+    "CLAUDE.md",
+    "AGENTS.md",
+    "CONTEXT.md",
+    ".gitignore",
+    ".claude-plugin/plugin.json"
+  ],
+  "ci_cd": [],
+  "docker": null,
+  "database_hints": [],
+  "test_framework": null,
+  "test_file_count": 0,
+  "modules": [
+    "engineering",
+    "productivity",
+    "misc",
+    "in-progress",
+    "deprecated",
+    "personal"
+  ],
+  "skills_by_module": {
+    "engineering": [
+      "diagnose",
+      "grill-with-docs",
+      "improve-codebase-architecture",
+      "prototype",
+      "setup-matt-pocock-skills",
+      "tdd",
+      "to-issues",
+      "to-prd",
+      "triage",
+      "zoom-out"
+    ],
+    "productivity": [
+      "caveman",
+      "grill-me",
+      "handoff",
+      "write-a-skill"
+    ],
+    "misc": [
+      "git-guardrails-claude-code",
+      "migrate-to-shoehorn",
+      "scaffold-exercises",
+      "setup-pre-commit"
+    ],
+    "in-progress": [
+      "review",
+      "writing-beats",
+      "writing-fragments",
+      "writing-shape"
+    ],
+    "deprecated": [
+      "design-an-interface",
+      "qa",
+      "request-refactor-plan",
+      "ubiquitous-language"
+    ],
+    "personal": [
+      "edit-article",
+      "obsidian-vault"
+    ]
+  },
+  "total_files": 57,
+  "total_skills": 28,
+  "published_skills": 14,
+  "adr_count": 1,
+  "organization_suggestion": {
+    "granularity": "module",
+    "rationale": "Top-level skills/ folder is explicitly organized by domain bucket (engineering/, productivity/, misc/, etc.), each with its own README.",
+    "signals": [
+      {
+        "type": "top_level_domain_folders",
+        "evidence": [
+          "skills/engineering/",
+          "skills/productivity/",
+          "skills/misc/",
+          "skills/in-progress/",
+          "skills/deprecated/",
+          "skills/personal/"
+        ]
+      }
+    ],
+    "features": []
+  }
+}
